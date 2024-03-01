@@ -12,3 +12,9 @@ Cargo.lock
 
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
+
+# Readme staging/notes etc. I don't want to include
+README_NOTES.m
+# Readme staging/notes etc. I don't want to include
+README_NOTES.md
+

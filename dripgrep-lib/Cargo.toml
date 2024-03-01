@@ -1,0 +1,23 @@
+[package]
+name = "dripgrep-lib"
+version = "0.0.1"
+edition = "2021"
+build = "build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+async-openai = "0.18.2"
+async-trait = "0.1.72"
+clap = { version = "4.5.1", features = ["derive"] }
+# openai-func-enums = { path = "../../openai-func-enums/openai-func-enums"}
+openai-func-enums = "0.3.0"
+rkyv = { version = "0.7.44", features = ["validation"] }
+serde = { version = "1.0.160", features = ["derive"] }
+serde_json = "1"
+tiktoken-rs = "0.4.2"
+tokio = { version = "1.25.0", features = ["full"] }
+
+[features]
+compile_embeddings_all = ["openai-func-enums/compile_embeddings_all"]
+compile_embeddings_update = ["openai-func-enums/compile_embeddings_update"]
