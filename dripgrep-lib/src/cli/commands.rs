@@ -27,6 +27,11 @@ pub enum Commands {
         enabled: Enabled,
     },
 
+    /// Sets whether or not to show debug messages
+    Debug {
+        enabled: Enabled,
+    },
+
     /// Sets whether or not regex patterns using '.' match newline characters
     DotAll {
         enabled: Enabled,
@@ -152,6 +157,10 @@ impl RunCommand for Commands {
 
             Commands::CRLF { enabled } => {
                 return crlf(arguments, enabled).await;
+            }
+
+            Commands::Debug { enabled } => {
+                return debug(arguments, enabled).await;
             }
 
             Commands::DotAll { enabled } => {

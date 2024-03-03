@@ -127,6 +127,21 @@ pub async fn crlf(
     Ok((Some(result), Some(args)))
 }
 
+pub async fn debug(
+    arguments: Option<Vec<String>>,
+    enabled: &Enabled,
+) -> Result<(Option<String>, Option<Vec<String>>), Box<dyn std::error::Error + Send + Sync + 'static>>
+{
+    let mut args = arguments.unwrap_or_else(Vec::new);
+
+    if let Enabled::Yes = enabled {
+        args.push(String::from("--debug"));
+    }
+
+    let result = String::from("Ok.");
+    Ok((Some(result), Some(args)))
+}
+
 pub async fn dot_all(
     arguments: Option<Vec<String>>,
     enabled: &Enabled,
