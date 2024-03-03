@@ -108,6 +108,25 @@ pub async fn context_lines(
     Ok((Some(result), Some(args)))
 }
 
+pub async fn crlf(
+    arguments: Option<Vec<String>>,
+    enabled: &Enabled,
+) -> Result<(Option<String>, Option<Vec<String>>), Box<dyn std::error::Error + Send + Sync + 'static>>
+{
+    let mut args: Vec<String> = vec![];
+    if let Some(arguments) = arguments {
+        args.extend(arguments.to_vec());
+    }
+
+    match enabled {
+        Enabled::Yes => args.push(String::from("--crlf")),
+        Enabled::No => args.push(String::from("--no-crlf")),
+    }
+
+    let result = String::from("Ok.");
+    Ok((Some(result), Some(args)))
+}
+
 pub async fn dot_all(
     arguments: Option<Vec<String>>,
     enabled: &Enabled,

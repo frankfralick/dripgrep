@@ -22,6 +22,11 @@ pub enum Commands {
         lines_after: i32,
     },
 
+    /// Sets wether to treat CRLF ('\r\n') as a line terminator instead of just '\n'
+    CRLF {
+        enabled: Enabled,
+    },
+
     /// Sets whether or not regex patterns using '.' match newline characters
     DotAll {
         enabled: Enabled,
@@ -143,6 +148,10 @@ impl RunCommand for Commands {
                 lines_after,
             } => {
                 return context_lines(arguments, lines_before, lines_after).await;
+            }
+
+            Commands::CRLF { enabled } => {
+                return crlf(arguments, enabled).await;
             }
 
             Commands::DotAll { enabled } => {
