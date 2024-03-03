@@ -89,6 +89,11 @@ pub enum Commands {
         thread_count: i32,
     },
 
+    /// Sets whether or not to show trace data
+    TraceData {
+        enabled: Enabled,
+    },
+
     /// Sets whether to treat binary files as if they were text
     TreatBinaryAsText {
         enabled: Enabled,
@@ -208,6 +213,10 @@ impl RunCommand for Commands {
 
             Commands::Threads { thread_count } => {
                 return threads(arguments, thread_count).await;
+            }
+
+            Commands::TraceData { enabled } => {
+                return trace_data(arguments, enabled).await;
             }
 
             Commands::TreatBinaryAsText { enabled } => {

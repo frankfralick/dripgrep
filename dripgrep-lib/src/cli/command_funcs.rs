@@ -370,6 +370,21 @@ pub async fn threads(
     Ok((Some(result), Some(args)))
 }
 
+pub async fn trace_data(
+    arguments: Option<Vec<String>>,
+    enabled: &Enabled,
+) -> Result<(Option<String>, Option<Vec<String>>), Box<dyn std::error::Error + Send + Sync + 'static>>
+{
+    let mut args = arguments.unwrap_or_else(Vec::new);
+
+    if let Enabled::Yes = enabled {
+        args.push(String::from("--trace"));
+    }
+
+    let result = String::from("Ok.");
+    Ok((Some(result), Some(args)))
+}
+
 pub async fn treat_binary_as_text(
     arguments: Option<Vec<String>>,
     enabled: &Enabled,
