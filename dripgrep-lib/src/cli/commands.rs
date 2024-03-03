@@ -16,6 +16,12 @@ pub enum Commands {
         case_sensitivity: CaseSensitivity,
     },
 
+    /// Sets how many of the lines of the surrounding context to display
+    ContextLines {
+        lines_before: i32,
+        lines_after: i32,
+    },
+
     /// Sets whether or not regex patterns using '.' match newline characters
     DotAll {
         enabled: Enabled,
@@ -130,6 +136,13 @@ impl RunCommand for Commands {
         match self {
             Commands::CaseFilter { case_sensitivity } => {
                 return case_filter(arguments, case_sensitivity).await;
+            }
+
+            Commands::ContextLines {
+                lines_before,
+                lines_after,
+            } => {
+                return context_lines(arguments, lines_before, lines_after).await;
             }
 
             Commands::DotAll { enabled } => {

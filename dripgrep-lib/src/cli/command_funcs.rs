@@ -88,6 +88,26 @@ pub async fn case_filter(
     Ok((Some(result), Some(args)))
 }
 
+pub async fn context_lines(
+    arguments: Option<Vec<String>>,
+    lines_before: &i32,
+    lines_after: &i32,
+) -> Result<(Option<String>, Option<Vec<String>>), Box<dyn std::error::Error + Send + Sync + 'static>>
+{
+    let mut args: Vec<String> = vec![];
+    if let Some(arguments) = arguments {
+        args.extend(arguments.to_vec());
+    }
+
+    args.push(String::from("--before_context"));
+    args.push(lines_before.to_string());
+    args.push(String::from("--after-context"));
+    args.push(lines_after.to_string());
+
+    let result = String::from("Ok.");
+    Ok((Some(result), Some(args)))
+}
+
 pub async fn dot_all(
     arguments: Option<Vec<String>>,
     enabled: &Enabled,
