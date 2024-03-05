@@ -50,8 +50,11 @@ use tokio::sync::Mutex;
 ///
 /// # Example Usage
 /// ```
+/// use dripgrep_lib::cli::args::CaseSensitivity;
+/// use dripgrep_lib::cli::command_funcs::case_filter;
+///
 /// async fn example_usage() {
-///     let arguments = Some(vec![String::from("--pretty", "--type", "rust")]);
+///     let arguments = Some(vec![String::from("--pretty"), String::from("--type"), String::from("rust")]);
 ///     let case_sensitivity = CaseSensitivity::IgnoreCase;
 ///
 ///     match case_filter(arguments, &case_sensitivity).await {
