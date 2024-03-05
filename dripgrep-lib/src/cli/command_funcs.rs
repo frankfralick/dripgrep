@@ -132,7 +132,7 @@ pub async fn debug(
     enabled: &Enabled,
 ) -> Result<(Option<String>, Option<Vec<String>>), Box<dyn std::error::Error + Send + Sync + 'static>>
 {
-    let mut args = arguments.unwrap_or_else(Vec::new);
+    let mut args = arguments.unwrap_or_default();
 
     if let Enabled::Yes = enabled {
         args.push(String::from("--debug"));
@@ -375,7 +375,7 @@ pub async fn trace_data(
     enabled: &Enabled,
 ) -> Result<(Option<String>, Option<Vec<String>>), Box<dyn std::error::Error + Send + Sync + 'static>>
 {
-    let mut args = arguments.unwrap_or_else(Vec::new);
+    let mut args = arguments.unwrap_or_default();
 
     if let Enabled::Yes = enabled {
         args.push(String::from("--trace"));
