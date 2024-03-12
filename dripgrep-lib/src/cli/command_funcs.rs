@@ -448,17 +448,6 @@ pub async fn search(
         .await;
     let message = format!("{:#?}", command);
 
-    // let mut arg_out = vec![String::from("rg")];
-    // arg_out.extend(
-    //     command
-    //         .as_std()
-    //         .get_args()
-    //         .map(|arg| arg.to_string_lossy().into_owned())
-    //         .collect::<Vec<_>>(),
-    // );
-
-    // let message = arg_out.join(" ");
-
     let _ = logger.sender.send(message).await;
     let _ = logger.sender.send(String::from("")).await;
 
@@ -487,11 +476,10 @@ pub async fn call_multi_step(
     execution_strategy: ToolCallExecutionStrategy,
     logger: Arc<Logger>,
     model_name: &str,
-    system_meessage: Option<String>,
+    system_meessage: Option<(String, usize)>,
     prompt_list: &Vec<String>,
 ) -> Result<(Option<String>, Option<Vec<String>>), Box<dyn std::error::Error + Send + Sync + 'static>>
 {
-    // ) -> Result<(), Box<dyn std::error::Error + Send + Sync + 'static>> {
     let _ = logger
         .sender
         .send(String::from("\nMulti-step prompt list:\n"))
@@ -519,8 +507,8 @@ pub async fn call_multi_step(
                 CommandsGPT::run(
                     &prompt.to_string(),
                     model_name,
-                    FUNC_ENUMS_MAX_REQUEST_TOKENS.into(),
-                    FUNC_ENUMS_MAX_RESPONSE_TOKENS,
+                    Some(FUNC_ENUMS_MAX_REQUEST_TOKENS.into()),
+                    Some(FUNC_ENUMS_MAX_RESPONSE_TOKENS),
                     system_meessage.clone(),
                     prior_result_clone,
                     execution_strategy.clone(),
@@ -541,8 +529,8 @@ pub async fn call_multi_step(
                     CommandsGPT::run(
                         &new_prompt,
                         model_name,
-                        FUNC_ENUMS_MAX_REQUEST_TOKENS.into(),
-                        FUNC_ENUMS_MAX_RESPONSE_TOKENS,
+                        Some(FUNC_ENUMS_MAX_REQUEST_TOKENS.into()),
+                        Some(FUNC_ENUMS_MAX_RESPONSE_TOKENS),
                         system_meessage.clone(),
                         prior_result_clone,
                         execution_strategy.clone(),
@@ -567,7 +555,7 @@ pub async fn gpt(
     execution_strategy: ToolCallExecutionStrategy,
     logger: Arc<Logger>,
     model_name: &str,
-    system_message: Option<String>,
+    system_message: Option<(String, usize)>,
     prompt: &String,
 ) -> Result<(Option<String>, Option<Vec<String>>), Box<dyn std::error::Error + Send + Sync + 'static>>
 {
@@ -585,8 +573,8 @@ pub async fn gpt(
     CommandsGPT::run(
         prompt,
         model_name,
-        FUNC_ENUMS_MAX_REQUEST_TOKENS.into(),
-        FUNC_ENUMS_MAX_RESPONSE_TOKENS,
+        Some(FUNC_ENUMS_MAX_REQUEST_TOKENS.into()),
+        Some(FUNC_ENUMS_MAX_RESPONSE_TOKENS),
         system_message.clone(),
         prior_result,
         execution_strategy.clone(),

@@ -7,12 +7,12 @@ No? I'm not surprised. I bet you don't even know how to sail.
 
 This project is an experimental, LLM-based wrapper for ripgrep, for those with the means, and the time, to introduce paid network calls into compilation and runtime.
 
-<span style="font-size: 80%;">(Jokes aside, this _is_ a serious project (in a way), but it is not a serious attempt to make some sort of grep gpt. I'm not making this because I think it is a great idea worth pursuing on its own. Don't actually use this. Learn real command line tools, not this thing. Your children could one day find out. Consider your legacy. You are either part of the priesthood or an apostate. Now, go and <a href="https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md" target="_blank" rel="noopener noreferrer">pray</a>.)</span>
+<span style="font-size: 80%;">(Jokes aside, this _is_ a serious project (in a way), but it is not a serious attempt to make some sort of grep gpt. Don't actually use this. Learn real command line tools, not this thing. Your children could one day find out. Consider your legacy. You are either part of the priesthood or an apostate. Now, go and <a href="https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md" target="_blank" rel="noopener noreferrer">pray</a>.)</span>
 
 ### Example
 Let's grep .txt files for a phrase in a language I don't know, Hungarian:
 ![dg](./dripgrep/assests/dg_example.png)
-Can your grep do <a href="https://twitter.com/tsoding/status/1756517251497255167" target="_blank" rel="noopener noreferrer" style="font-style: italic">thaaaat</a>_??_ This took four calls. One to plan, one for setting the filetype flag with txt option, one for setting the statistics flag, and then one for search. The --pretty flag is just hardcoded to be added on for now. 
+Can your grep do <a href="https://twitter.com/tsoding/status/1756517251497255167" target="_blank" rel="noopener noreferrer" style="font-style: italic">thaaaat</a>_??_
 
 To be clear, we are not telling the model a single thing that hints about ripgrep (which actually would only make things worse), and we aren't just saying "Come up with a command line entry that would do ________ with ripgrep.". Everything that builds up the command is Rust types.
 
@@ -20,7 +20,9 @@ To be clear, we are not telling the model a single thing that hints about ripgre
 We'd lose 3,000% of the luxuriousness of doing it with dripgrep by doing it with ripgrep directly. These people that must be constantly finding themselves in file-searching emergencies all the time would call it a 3,000% performance gain:
 ![dg](./dripgrep/assests/rg_example.png)
 
-Here is another example demonstrating parallel tool calling. By default all tool calls made at the same time make progress concurrently, but you can choose to run them synchronously, or put them on their own os threads. This is a feature of <a href="https://github.com/frankfralick/openai-func-enums" target="_blank" rel="noopener noreferrer">openai-func-enums</a>. This example represents a total of 7 api calls were needed to complete this prompt, and 8 tool selections were made by the model (2 were called in parallel):
+Here is another example demonstrating parallel tool calling. By default all tool calls made at the same time make progress concurrently, but you can choose to run them synchronously, or put them on their own os threads. This is a feature of <a href="https://github.com/frankfralick/openai-func-enums" target="_blank" rel="noopener noreferrer">openai-func-enums</a>. 
+
+A total of 7 api calls were needed to complete this prompt, and 8 tool selections were made by the model (2 were called in parallel):
 
 ![dg](./dripgrep/assests/dg_parallel_example.png)
 

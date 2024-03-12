@@ -7,11 +7,11 @@ edition = "2021"
 
 [dependencies]
 dripgrep-lib = { path = "../dripgrep-lib"}
-async-openai = "0.18.2"
+async-openai = "0.19.0"
 async-trait = "0.1.72"
 clap = { version = "4.5.1", features = ["derive"] }
-# openai-func-enums = { path = "../../openai-func-enums/openai-func-enums" }
-openai-func-enums = "0.3.0"
+# openai-func-enums = { path = "../../openai-func-enums/openai-func-enums", features = ["function_filtering"]}
+openai-func-enums = "0.4.0"
 serde = { version = "1.0.160", features = ["derive"] }
 serde_json = "1"
 tiktoken-rs = "0.4.2"
@@ -20,3 +20,4 @@ tokio = { version = "1.25.0", features = ["full"] }
 [features]
 compile_embeddings_all = ["dripgrep-lib/compile_embeddings_all"]
 compile_embeddings_update = ["dripgrep-lib/compile_embeddings_update"]
+default = ["openai-func-enums/function_filtering"]

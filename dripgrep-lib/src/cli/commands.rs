@@ -7,7 +7,6 @@ use super::{
 use clap::Subcommand;
 use openai_func_enums::{Logger, RunCommand, ToolCallExecutionStrategy, ToolSet};
 use std::sync::Arc;
-use tokio::sync::Mutex;
 
 #[derive(Clone, Debug, Subcommand, ToolSet)]
 pub enum Commands {
@@ -126,27 +125,12 @@ impl RunCommand for Commands {
         execution_strategy: ToolCallExecutionStrategy,
         arguments: Option<Vec<String>>,
         logger: Arc<Logger>,
+        system_message: Option<(String, usize)>,
     ) -> Result<
         (Option<String>, Option<Vec<String>>),
         Box<dyn std::error::Error + Send + Sync + 'static>,
     > {
         let model_name = "gpt-4-1106-preview";
-
-        let system_message = "You are a highly capable function-calling bot, trained to process complex, \
-                      multi-step requests from users. Your main function is to oversee an application \
-                      for conducting searches within file systems, accommodating a range of optional \
-                      settings as specified by users. For requests that involve multiple sequential steps, \
-                      initiate the process with the CallMultiStep function. This function requires an array \
-                      of text prompts, each delineating a distinct step in the task sequence. The essence of \
-                      CallMultiStep is to ensure that multi-step tasks are executed in an orderly fashion, \
-                      maintaining the correct sequence and respecting the dependencies between steps. \
-                      Always prioritize setting adjustments before the search action in your prompts. \
-                      For example, to search for 'fast' within markdown files, CallMultiStep should receive \
-                      two prompts: the first to activate a filetype filter for markdown files, and the second \
-                      to command the search for 'fast'. Importantly, if a request includes translating a phrase \
-                      prior to search, translate it using your internal knowledge before incorporating it \
-                      into the CallMultiStep prompts. This ensures that all steps, from option setting to \
-                      translation and search, are methodically organized and executed according to user instructions.";
 
         match self {
             Commands::CaseFilter { case_sensitivity } => {
@@ -239,7 +223,7 @@ impl RunCommand for Commands {
                     execution_strategy.clone(),
                     logger_clone,
                     model_name,
-                    Some(system_message.to_string()),
+                    system_message,
                     prompt_list,
                 )
                 .await;
@@ -252,7 +236,7 @@ impl RunCommand for Commands {
                     execution_strategy.clone(),
                     logger_clone,
                     model_name,
-                    Some(system_message.to_string()),
+                    system_message,
                     prompt,
                 )
                 .await;

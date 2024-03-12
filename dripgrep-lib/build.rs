@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 fn main() {
     // This is the path to where embeddings will be stored.
-    let relative_path = PathBuf::from("../embedding/function_embeddings.txt");
+    let relative_path = PathBuf::from("../embedding/function_embeddings.bin");
     let manifest_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
     let absolute_path = PathBuf::from(manifest_dir).join(relative_path);
 
